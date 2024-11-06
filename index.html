@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | HUSNI</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        .modal-body {
+            font-size: 14px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        .calculator {
+            margin-top: 20px;
+        }
+        .card {
+            transition: transform 0.2s;
+            cursor: pointer; /* Change cursor to pointer for better UX */
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .error-message {
+            color: red;
+        }
+        .formula-inputs {
+            display: none; /* Hide inputs by default */
+        }
+    </style>
+</head>
+<body>
+
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+      <div class="container">
+          <a class="navbar-brand" href="#">MUHAMMAD HUSNI</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      </div>
+   </nav>
+   <!-- End Navbar -->
+
+   <div class="container text-center">
+       <div class="jumbotron">
+           <img src="img/HUSNI.jpg" alt="husni" width="200" height="200" class="rounded-circle mt-4">
+           <h1 class="display-4">Husni</h1>
+           <p class="lead">PERKENALKAN NAMA SAYA HUSNI MAHASISWA S1 TEKNIK INFORMATIKA</p>
+       </div>
+   </div>
+
+   <!-- Program -->
+   <div class="container mt-5">
+    <h2>Program Card</h2>
+    
+    <!-- Card for Hello World -->
+    <div class="card mb-3">
+      <div class="card-header">Program Hello World</div>
+      <div class="card-body">
+        <p>Program untuk mencetak Hello World.</p>
+        <pre><code>console.log("Hello World!");</code></pre>
+        <button class="btn btn-success" onclick="runHelloWorld()">Jalankan</button>
+      </div>
+    </div>
+
+    <!-- Card for Luas Persegi -->
+    <div class="card mb-3">
+      <div class="card-header">Luas Persegi</div>
+      <div class="card-body">
+        <p>Program untuk menghitung luas persegi.</p>
+        <input type="number" id="sisiPersegi" class="form-control mb-2" placeholder="Masukkan sisi">
+        <button class="btn btn-success" onclick="hitungLuasPersegi()">Hitung Luas</button>
+        <p id="hasilPersegi"></p>
+      </div>
+    </div>
+  
+    <!-- Card for Physics Formulas -->
+    <div class="card mb-3">
+      <div class="card-header">Rumus Fisika</div>
+      <div class="card-body">
+        <label for="formulaSelect">Pilih Rumus:</label>
+        <select id="formulaSelect" class="form-control mb-3" onchange="updateFormulaInputs()">
+          <option value="">--Pilih Rumus--</option>
+          <option value="energiKinetik">Energi Kinetik (Ek = 1/2 m v^2)</option>
+          <option value="gaya">Gaya (F = m a)</option>
+          <option value="energiPotensial">Energi Potensial (Ep = m g h)</option>
+        </select>
+
+        <div id="energiKinetikInputs" class="formula-inputs">
+          <input type="number" id="massa" class="form-control mb-2" placeholder="Masukkan massa (kg)">
+          <input type="number" id="kecepatan" class="form-control mb-2" placeholder="Masukkan kecepatan (m/s)">
+          <button class="btn btn-success" onclick="hitungEnergiKinetik()">Hitung Energi Kinetik</button>
+          <p id="hasilEnergiKinetik"></p>
+        </div>
+
+        <div id="gayaInputs" class="formula-inputs">
+          <input type="number" id="massaGaya" class="form-control mb-2" placeholder="Masukkan massa (kg)">
+          <input type="number" id="percepatan" class="form-control mb-2" placeholder="Masukkan percepatan (m/s²)">
+          <button class="btn btn-success" onclick="hitungGaya()">Hitung Gaya</button>
+          <p id="hasilGaya"></p>
+        </div>
+
+        <div id="energiPotensialInputs" class="formula-inputs">
+          <input type="number" id="massaEp" class="form-control mb-2" placeholder="Masukkan massa (kg)">
+          <input type="number" id="tinggi" class="form-control mb-2" placeholder="Masukkan tinggi (m)">
+          <button class="btn btn-success" onclick="hitungEnergiPotensial()">Hitung Energi Potensial</button>
+          <p id="hasilEnergiPotensial"></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+   <!-- Include Bootstrap and jQuery -->
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+   <!-- JavaScript Functionality -->
+   <script>
+    function runHelloWorld() {
+      alert("Hello World!");
+    }
+  
+    function hitungLuasPersegi() {
+      const sisi = document.getElementById("sisiPersegi").value;
+      const luas = sisi * sisi;
+      document.getElementById("hasilPersegi").textContent = "Luas Persegi: " + luas;
+    }
+
+    function updateFormulaInputs() {
+      const selectedFormula = document.getElementById("formulaSelect").value;
+
+      // Hide all formula inputs
+      document.querySelectorAll('.formula-inputs').forEach(div => div.style.display = 'none');
+
+      // Show the selected formula inputs
+      if (selectedFormula) {
+        document.getElementById(`${selectedFormula}Inputs`).style.display = 'block';
+      }
+    }
+  
+    function hitungEnergiKinetik() {
+      const massa = document.getElementById("massa").value;
+      const kecepatan = document.getElementById("kecepatan").value;
+      const energiKinetik = 0.5 * massa * kecepatan * kecepatan;
+      document.getElementById("hasilEnergiKinetik").textContent = "Energi Kinetik: " + energiKinetik + " Joule";
+    }
+
+    function hitungGaya() {
+      const massa = document.getElementById("massaGaya").value;
+      const percepatan = document.getElementById("percepatan").value;
+      const gaya = massa * percepatan;
+      document.getElementById("hasilGaya").textContent = "Gaya: " + gaya + " N";
+    }
+
+    function hitungEnergiPotensial() {
+      const massa = document.getElementById("massaEp").value;
+      const tinggi = document.getElementById("tinggi").value;
+      const energiPotensial = massa * 9.81 * tinggi; // g = 9.81 m/s²
+      document.getElementById("hasilEnergiPotensial").textContent = "Energi Potensial: " + energiPotensial + " Joule";
+    }
+  </script>
+
+</body>
+</html>
